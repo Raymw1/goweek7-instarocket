@@ -1,0 +1,4 @@
+.env
+backend/uploads/resized/*.png
+backend/uploads/resized/*.jpg
+backend/uploads/resized/*.jpeg
