@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import api from '../services/api';
+import io from 'socket.io-client';
 
 import camera from '../assets/camera.png';
 import more from '../assets/more.png';
@@ -29,10 +30,28 @@ export default class Feed extends Component {
   };
 
   async componentDidMount() {
-    // this.registerToSocket();
+    this.registerToSocket();
     const {data} = await api.get('/posts');
     this.setState({feed: data});
   }
+
+  registerToSocket = () => {
+    const socket = io('http://10.0.2.2:3333');
+    socket.on('post', newPost =>
+      this.setState({feed: [newPost, ...this.state.feed]}),
+    );
+    socket.on('like', likedPost => {
+      this.setState({
+        feed: this.state.feed.map(post =>
+          post._id === likedPost._id ? likedPost : post,
+        ),
+      });
+    });
+  };
+
+  handleLike = async id => {
+    await api.post(`/posts/${id}/like`);
+  };
 
   render() {
     return (
@@ -55,13 +74,15 @@ export default class Feed extends Component {
               />
               <View style={styles.feedItemFooter}>
                 <View style={styles.actions}>
-                  <TouchableOpacity onPress={() => {}}>
+                  <TouchableOpacity
+                    style={styles.action}
+                    onPress={() => this.handleLike(item._id)}>
                     <Image source={like} />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => {}}>
+                  <TouchableOpacity style={styles.action} onPress={() => {}}>
                     <Image source={comment} />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => {}}>
+                  <TouchableOpacity style={styles.action} onPress={() => {}}>
                     <Image source={send} />
                   </TouchableOpacity>
                 </View>
@@ -98,5 +119,31 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
     marginTop: 2,
+  },
+  feedImage: {
+    width: '100%',
+    height: 400,
+    marginVertical: 15,
+  },
+  feedItemFooter: {
+    paddingHorizontal: 15,
+  },
+  actions: {
+    flexDirection: 'row',
+  },
+  action: {
+    marginRight: 8,
+  },
+  likes: {
+    marginTop: 8,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  description: {
+    color: '#000',
+    lineHeight: 18,
+  },
+  hashtags: {
+    color: '#7159c1',
   },
 });
