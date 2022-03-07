@@ -4753,6 +4753,7 @@ __metadata:
     react: 17.0.2
     react-native: 0.67.3
     react-native-gesture-handler: ^2.3.0
+    react-native-image-picker: ^4.7.3
     react-native-safe-area-context: ^4.1.2
     react-navigation: ^4.4.4
     react-navigation-stack: ^2.10.4
@@ -7546,6 +7547,16 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: cf9bda6c9865518932671049a71644f04d8ada812efeeada6588bb336889c17f3a4eb0e52a6407ddb88615c00fa14589d1cb96852f77fd8e88dbccb7349d9c9b
+  languageName: node
+  linkType: hard
+
+"react-native-image-picker@npm:^4.7.3":
+  version: 4.7.3
+  resolution: "react-native-image-picker@npm:4.7.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 3550a336829db36e9bc15bf35409ddf6a12be19d5a0583aff2e96dafbf64296db03861cd3993d15c91fe1e3be17a4af1fa3d63408b8e7eaeee5781069d9ef4f3
   languageName: node
   linkType: hard
 
