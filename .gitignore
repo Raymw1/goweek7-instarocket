@@ -2,3 +2,6 @@
 backend/uploads/resized/*.png
 backend/uploads/resized/*.jpg
 backend/uploads/resized/*.jpeg
+node_modules
+.yarn
+
